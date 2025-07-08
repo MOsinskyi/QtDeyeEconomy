@@ -137,10 +137,10 @@ QtDeyeEconomy/
 ## 📱 Screenshots
 
 ### 🌙 Dark
-![img_1.png](img_1.png)
+![dark.png](image2.png)
 
 ### ☀️ Light
-![img_2.png](img_2.png)
+![light.png](image1.png)
 
 ---
 

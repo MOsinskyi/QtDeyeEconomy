@@ -1,0 +1,5 @@
+﻿pyside6
+requests
+beautifulsoup4
+xlwings
+auto-py-to-exe

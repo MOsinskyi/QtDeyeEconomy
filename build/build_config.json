@@ -1,0 +1,89 @@
+{
+ "version": "auto-py-to-exe-configuration_v1",
+ "pyinstallerOptions": [
+  {
+   "optionDest": "noconfirm",
+   "value": true
+  },
+  {
+   "optionDest": "filenames",
+   "value": "C:/Users/maxim/PycharmProjects/QtDeyeEconomy/src/main.py"
+  },
+  {
+   "optionDest": "onefile",
+   "value": true
+  },
+  {
+   "optionDest": "console",
+   "value": false
+  },
+  {
+   "optionDest": "icon_file",
+   "value": "C:/Users/maxim/PycharmProjects/QtDeyeEconomy/resources/icon.ico"
+  },
+  {
+   "optionDest": "clean_build",
+   "value": false
+  },
+  {
+   "optionDest": "strip",
+   "value": false
+  },
+  {
+   "optionDest": "noupx",
+   "value": false
+  },
+  {
+   "optionDest": "disable_windowed_traceback",
+   "value": false
+  },
+  {
+   "optionDest": "uac_admin",
+   "value": false
+  },
+  {
+   "optionDest": "uac_uiaccess",
+   "value": false
+  },
+  {
+   "optionDest": "argv_emulation",
+   "value": false
+  },
+  {
+   "optionDest": "bootloader_ignore_signals",
+   "value": false
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/maxim/PycharmProjects/QtDeyeEconomy/config.json;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/maxim/PycharmProjects/QtDeyeEconomy/ElectricityPrices.xlsx;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/maxim/PycharmProjects/QtDeyeEconomy/requirements.txt;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/maxim/PycharmProjects/QtDeyeEconomy/resources_rc.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/maxim/PycharmProjects/QtDeyeEconomy/ui;ui/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/maxim/PycharmProjects/QtDeyeEconomy/src;src/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/maxim/PycharmProjects/QtDeyeEconomy/resources;resources/"
+  }
+ ],
+ "nonPyinstallerOptions": {
+  "increaseRecursionLimit": true,
+  "manualArguments": ""
+ }
+}

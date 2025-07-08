@@ -1,6 +1,6 @@
 ﻿import PySide6.QtCore
 
-def pyside_test():
+def pyside_version():
     # Prints PySide6 version
     print(PySide6.__version__)
 

@@ -257,7 +257,10 @@ class DeyeAccount(User):
         self._last_response_date = date
         self.LastResponseDateChanged.emit(date)
 
-    def get_auth_token(self) -> str:
+    def token_exist(self) -> bool:
+        return self._token != ""
+
+    async def get_auth_token(self) -> str:
         url = f'{BASE_URL}/account/token?appId={self._app_id}'
         headers = {'Content-Type': 'application/json'}
 
@@ -272,11 +275,13 @@ class DeyeAccount(User):
             response.raise_for_status()
             self._token = response.json()["accessToken"]
         except requests.exceptions.ConnectionError:
-            QMessageBox.critical(None, "Error", "Check your internet connection!")
+            QMessageBox.critical(None, "Помилка", "Перевірте інтернет з'єднання!")
+        except KeyError:
+            QMessageBox.critical(None, "Помилка", "Перевірте правильність введених даних!")
 
         return self._token
 
-    def get_device_list(self, view_mode: ViewModes) -> list[Device]:
+    async def get_device_list(self, view_mode: ViewModes) -> list[Device]:
         url = f"{BASE_URL}/station/listWithDevice"
         headers = {
             'Content-Type': 'application/json',

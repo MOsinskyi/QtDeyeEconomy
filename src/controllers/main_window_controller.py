@@ -1,6 +1,6 @@
 ﻿from PySide6 import QtCore
 from PySide6.QtCore import QObject, QDateTime, QAbstractTableModel
-from PySide6.QtWidgets import QTableView
+from PySide6.QtWidgets import QTableView, QMessageBox
 
 from models.device import Device
 from models.daily_device_table import DailyDeviceTableModel
@@ -11,10 +11,16 @@ from models.yearly_device_table import YearlyDeviceTableModel
 from src.config_loader import ConfigLoader
 from src.utils import *
 
+import asyncio
+
+from views.download_window_view import DownloadWindowView
+from controllers.download_window_controller import DownloadWindowController
+
 
 class MainWindowController(QObject):
     def __init__(self, deye_account: DeyeAccount, config: ConfigLoader, prices: ElectricityPrice,
-                 view_mode: ViewModes) -> None:
+                 view_mode: ViewModes, dialog_view: DownloadWindowView,
+                 dialog_controller: DownloadWindowController) -> None:
         super().__init__()
 
         self._config = config
@@ -22,6 +28,8 @@ class MainWindowController(QObject):
         self._electricity_price: ElectricityPrice = prices
         self._current_view_mode: ViewModes = view_mode
         self._current_table_model: QAbstractTableModel = None
+        self._dialog_view: DownloadWindowView = dialog_view
+        self._dialog_controller: DownloadWindowController = dialog_controller
 
         self._is_startup: bool = True
         self._last_modified: str = ""
@@ -43,23 +51,7 @@ class MainWindowController(QObject):
     def on_get_data_clicked(self, table_view: QTableView) -> None:
         self.update_last_modify()
 
-        self._deye_account.get_auth_token()
-        devices: list[Device] = self._deye_account.get_device_list(self._current_view_mode)
-        total_consumption: list[float] = [0.0 for _ in range(len(devices[0].consumption))]
-
-        for device in devices:
-            for i in range(len(device.consumption)):
-                total_consumption[i] += device.consumption[i]
-
-        if self._current_view_mode.value == ViewModes.DAY.value:
-            prices: list[float] = self._electricity_price.get_prices(self._deye_account.date)
-            self._current_table_model = DailyDeviceTableModel(devices, total_consumption, prices)
-
-        elif self._current_view_mode.value == ViewModes.MONTH.value:
-            self._current_table_model = MonthlyDeviceTableModel(devices, total_consumption)
-
-        elif self._current_view_mode.value == ViewModes.YEAR.value:
-            self._current_table_model = YearlyDeviceTableModel(devices, total_consumption)
+        asyncio.run(self._get_data())
 
         table_view.setModel(self._current_table_model)
 
@@ -87,6 +79,38 @@ class MainWindowController(QObject):
     def on_mode_view_toggled(self, view_mode: ViewModes) -> None:
         self._current_view_mode = view_mode
 
+    async def _get_data(self):
+        self._dialog_view.show()
+
+        get_auth_token_task = asyncio.create_task(self._deye_account.get_auth_token())
+        get_device_list_task = asyncio.create_task(self._deye_account.get_device_list(self._current_view_mode))
+        get_electricity_prices_task = asyncio.create_task(self._electricity_price.get_prices(self._deye_account.date))
+
+        if not self._deye_account.token_exist():
+            self._dialog_controller.update_status("Виконуємо вхід в акаунт...", 0)
+            await get_auth_token_task
+
+        self._dialog_controller.update_status("Отримуємо список пристроїв...", 35)
+        devices: list[Device] = await get_device_list_task
+        total_consumption: list[float] = [0.0 for _ in range(len(devices[0].consumption))]
+
+        for device in devices:
+            for i in range(len(device.consumption)):
+                total_consumption[i] += device.consumption[i]
+
+        if self._current_view_mode.value == ViewModes.DAY.value:
+            self._dialog_controller.update_status("Отримуємо ціни на електроенергію...", 70)
+            prices: list[float] = await get_electricity_prices_task
+            self._current_table_model = DailyDeviceTableModel(devices, total_consumption, prices)
+
+        elif self._current_view_mode.value == ViewModes.MONTH.value:
+            self._current_table_model = MonthlyDeviceTableModel(devices, total_consumption)
+
+        elif self._current_view_mode.value == ViewModes.YEAR.value:
+            self._current_table_model = YearlyDeviceTableModel(devices, total_consumption)
+
+        self._dialog_controller.update_status("Готово.", 100)
+
     def on_application_quit(self) -> None:
         if len(self._last_modified) > 0:
             new_data: dict = {
@@ -101,7 +125,6 @@ class MainWindowController(QObject):
             self._electricity_price.quit()
             self._config.save_config(new_data)
 
-
     def load_from_config(self) -> None:
         self.update_last_modify()
 
@@ -110,4 +133,3 @@ class MainWindowController(QObject):
         self._deye_account.app_id = self._config.get["appId"]
         self._deye_account.app_secret = self._config.get["appSecret"]
         self._deye_account.date = self._config.get["date"]
-

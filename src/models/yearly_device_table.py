@@ -1,12 +1,11 @@
 ﻿from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt
-
 from models.device import Device
 
 
 class YearlyDeviceTableModel(QAbstractTableModel):
     def __init__(self, devices: list[Device], total_consumption: list[float]) -> None:
         super().__init__()
-        self._devices = devices
+        self.__devices = devices
         self._total_consumption = total_consumption
 
         self._headers = ["Місяць"]
@@ -45,8 +44,8 @@ class YearlyDeviceTableModel(QAbstractTableModel):
             device_index = data_col // 4
             data_type = data_col % 4
 
-            if device_index < len(self._devices):
-                device = self._devices[device_index]
+            if device_index < len(self.__devices):
+                device = self.__devices[device_index]
 
                 if data_type == 0:
                     return f"{device.generation[row]:.1f}" if device.generation[row] != 0 else "0"

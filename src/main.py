@@ -21,7 +21,7 @@ def main() -> None:
     progress_model = ProgressModel()
 
     download_window_controller = DownloadWindowController(progress_model)
-    download_window_view = DownloadWindowView(download_window_controller, progress_model)
+    download_window_view = DownloadWindowView(progress_model)
     main_window_controller = MainWindowController(deye_account, config, electricity_price, ViewModes.DAY,
                                                   download_window_view, download_window_controller)
     main_window_view = MainWindowView(main_window_controller, deye_account, Style.MACOS)

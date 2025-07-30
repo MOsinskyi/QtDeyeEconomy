@@ -6,7 +6,7 @@ from PySide6.QtCore import Signal, QDate
 from PySide6.QtWidgets import QMessageBox
 
 from models.device import Device
-from src.models.user import User
+from models.user import User
 from utils import ViewModes, DATE_FORMAT
 
 BASE_URL: Final[str] = "https://eu1-developer.deyecloud.com/v1.0"

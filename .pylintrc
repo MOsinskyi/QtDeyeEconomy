@@ -1,0 +1,11 @@
+[MASTER]
+# Add both the project root and src directory to the Python path
+init-hook='import sys; sys.path.extend([r"C:\Users\maxim\QtDeyeEconomy", r"C:\Users\maxim\QtDeyeEconomy\src"])'
+
+[MESSAGES CONTROL]
+# Disable some common warnings and false positives
+disable=missing-module-docstring,
+        missing-function-docstring,
+        missing-docstring,
+        no-name-in-module,
+        unknown-option-value,

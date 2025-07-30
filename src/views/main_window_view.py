@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QMainWindow, QApplication, QStyleFactory, QLineEdi
 
 from controllers.main_window_controller import MainWindowController
 from models.deye_account import DeyeAccount
-from src.styles import Style
+from styles import Style
 from ui.ui_MainWindow import Ui_MainWindow
 from utils import convert_date, ViewModes
 

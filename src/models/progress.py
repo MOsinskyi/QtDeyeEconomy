@@ -7,25 +7,24 @@ class ProgressModel(QObject):
 
     def __init__(self):
         super().__init__()
-
-        self._progress: int = 0
-        self._message: str = ""
+        self.__progress = 0
+        self.__message = ""
 
     @property
     def progress(self) -> int:
-        return self._progress
+        return self.__progress
 
     @progress.setter
     def progress(self, new_value: int) -> None:
         if 0 <= new_value <= 100:
-            self._progress = new_value
-            self.ProgressChanged.emit(self._progress)
+            self.__progress = new_value
+            self.ProgressChanged.emit(self.__progress)
 
     @property
     def message(self) -> str:
-        return self._message
+        return self.__message
 
     @message.setter
     def message(self, new_message: str) -> None:
-        self._message = new_message
-        self.MessageChanged.emit(self._message)
+        self.__message = new_message
+        self.MessageChanged.emit(self.__message)

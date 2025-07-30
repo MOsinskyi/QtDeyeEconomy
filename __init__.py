@@ -1,1 +1,0 @@
-# QtDeyeEconomy package root

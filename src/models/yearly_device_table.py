@@ -6,8 +6,8 @@ from models.device import Device
 class YearlyDeviceTableModel(QAbstractTableModel):
     def __init__(self, devices: list[Device], total_consumption: list[float]) -> None:
         super().__init__()
-        self._devices: list[Device] = devices
-        self._total_consumption: list[float] = total_consumption
+        self._devices = devices
+        self._total_consumption = total_consumption
 
         self._headers = ["Місяць"]
         self._months = ["Грудень","Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад"]

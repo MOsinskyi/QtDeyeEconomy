@@ -6,5 +6,7 @@
     "python.linting.pylintArgs": [
         "--rcfile=.pylintrc"
     ],
-    "python.pythonPath": "./venv/Scripts/python.exe"
+    "python.pythonPath": "./venv/Scripts/python.exe",
+    "files.autoSave": "onFocusChange",
+    "editor.fontSize": 15
 }

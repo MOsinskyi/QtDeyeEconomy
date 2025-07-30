@@ -62,7 +62,7 @@ class YearlyDeviceTableModel(QAbstractTableModel):
 
                 return data_type_value
 
-            elif col == len(self.__headers) - 1:
+            if col == len(self.__headers) - 1:
                 return f"{self.__total_consumption[row]:.1f}" if self.__total_consumption[row] != 0 else "0"
 
         elif role == Qt.ItemDataRole.TextAlignmentRole:

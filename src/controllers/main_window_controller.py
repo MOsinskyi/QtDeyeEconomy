@@ -10,7 +10,7 @@ from models.electricity_price import ElectricityPrice
 from models.monthly_device_table import MonthlyDeviceTableModel
 from models.yearly_device_table import YearlyDeviceTableModel
 from config_loader import ConfigLoader
-from utils import convert_date, ViewModes
+from utils import ViewModes
 
 from views.download_window_view import DownloadWindowView
 from controllers.download_window_controller import DownloadWindowController
@@ -43,7 +43,7 @@ class MainWindowController(QObject):
 
     @QtCore.Slot()
     def on_insert_today_clicked(self) -> None:
-        self.__deye_account.date = str(convert_date(QDate.currentDate()))
+        self.__deye_account.date = QDate.currentDate().toString("yyyy-MM-dd")
 
     @QtCore.Slot(QTableView)
     def on_get_data_clicked(self, table_view: QTableView) -> None:
@@ -55,7 +55,7 @@ class MainWindowController(QObject):
 
     @QtCore.Slot(QDate)
     def on_date_edit_finished(self, date: QDate) -> None:
-        self.__deye_account.date = str(convert_date(date))
+        self.__deye_account.date = date.toString("yyyy-MM-dd")
 
     @QtCore.Slot(str)
     def on_email_edit_finished(self, email: str) -> None:

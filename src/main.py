@@ -15,7 +15,6 @@ from utils import ViewModes
 
 def main() -> None:
     app = QApplication(sys.argv)
-
     config = ConfigLoader("config.json")
     deye_account = DeyeAccount()
     electricity_price = ElectricityPrice()
@@ -23,12 +22,11 @@ def main() -> None:
 
     download_window_controller = DownloadWindowController(progress_model)
     download_window_view = DownloadWindowView(download_window_controller, progress_model)
-
-    main_window_controller = MainWindowController(deye_account, config, electricity_price, ViewModes.DAY, download_window_view, download_window_controller)
+    main_window_controller = MainWindowController(deye_account, config, electricity_price, ViewModes.DAY,
+                                                  download_window_view, download_window_controller)
     main_window_view = MainWindowView(main_window_controller, deye_account, Style.MACOS)
 
     main_window_view.show()
-
     main_window_controller.load_from_config()
 
     sys.exit(app.exec())

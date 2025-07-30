@@ -1,7 +1,6 @@
 ﻿import asyncio
 
-from PySide6 import QtCore
-from PySide6.QtCore import QObject, QDateTime, QDate
+from PySide6.QtCore import QObject, QDateTime, QDate, Slot
 from PySide6.QtWidgets import QTableView
 
 from models.daily_device_table import DailyDeviceTableModel
@@ -32,7 +31,7 @@ class MainWindowController(QObject):
         self.__is_startup = True
         self.__last_modified = ""
 
-    @QtCore.Slot()
+    @Slot()
     def update_last_modify(self) -> None:
         if self.__is_startup:
             self.__deye_account.last_response_date = self.__config.get["lastUpdated"]
@@ -41,11 +40,11 @@ class MainWindowController(QObject):
             self.__last_modified: str = QDateTime.currentDateTime().toString("dd.MM.yyyy hh:mm")
             self.__deye_account.last_response_date = self.__last_modified
 
-    @QtCore.Slot()
+    @Slot()
     def on_insert_today_clicked(self) -> None:
         self.__deye_account.date = QDate.currentDate().toString("yyyy-MM-dd")
 
-    @QtCore.Slot(QTableView)
+    @Slot(QTableView)
     def on_get_data_clicked(self, table_view: QTableView) -> None:
         self.update_last_modify()
 
@@ -53,27 +52,27 @@ class MainWindowController(QObject):
 
         table_view.setModel(self.__current_table_model)
 
-    @QtCore.Slot(QDate)
+    @Slot(QDate)
     def on_date_edit_finished(self, date: QDate) -> None:
         self.__deye_account.date = date.toString("yyyy-MM-dd")
 
-    @QtCore.Slot(str)
+    @Slot(str)
     def on_email_edit_finished(self, email: str) -> None:
         self.__deye_account.email = email
 
-    @QtCore.Slot(str)
+    @Slot(str)
     def on_password_edit_finished(self, password: str) -> None:
         self.__deye_account.password = password
 
-    @QtCore.Slot(str)
+    @Slot(str)
     def on_app_id_editing_finished(self, app_id: str) -> None:
         self.__deye_account.app_id = app_id
 
-    @QtCore.Slot(str)
+    @Slot(str)
     def on_app_secret_editing_finished(self, app_secret: str) -> None:
         self.__deye_account.app_secret = app_secret
 
-    @QtCore.Slot(ViewModes)
+    @Slot(ViewModes)
     def on_mode_view_toggled(self, view_mode: ViewModes) -> None:
         self.__current_view_mode = view_mode
 

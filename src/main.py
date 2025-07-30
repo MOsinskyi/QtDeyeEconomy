@@ -1,7 +1,10 @@
 ﻿import sys
+import os
+
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
 
 from PySide6.QtWidgets import QApplication
-
 from controllers.main_window_controller import MainWindowController
 from controllers.download_window_controller import DownloadWindowController
 from models.deye_account import DeyeAccount
@@ -30,7 +33,6 @@ def main() -> None:
     main_window_controller.load_from_config()
 
     sys.exit(app.exec())
-
 
 if __name__ == '__main__':
     main()

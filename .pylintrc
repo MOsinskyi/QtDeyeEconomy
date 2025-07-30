@@ -10,6 +10,7 @@ disable=missing-module-docstring,
         no-name-in-module,
         unknown-option-value,
         c-extension-no-member,
+        invalid-name,
 
 [FORMAT]
 max-line-length=120

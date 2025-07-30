@@ -7,7 +7,7 @@ from PySide6.QtWidgets import QMessageBox
 
 from models.device import Device
 from models.user import User
-from utils import ViewModes, DATE_FORMAT
+from utils import ViewModes
 
 BASE_URL: Final[str] = "https://eu1-developer.deyecloud.com/v1.0"
 
@@ -118,7 +118,7 @@ def get_monthly_data(token: str, device_sn: str, date_end: str):
 
 
 def get_yearly_data(token: str, device_sn: str, date: str):
-    year: str = str(QDate.fromString(date, DATE_FORMAT).year())
+    year: str = str(QDate.fromString(date, "yyyy-MM-dd").year())
     date_start: str = f"{year}-01"
     date_end: str = f"{year}-12"
 

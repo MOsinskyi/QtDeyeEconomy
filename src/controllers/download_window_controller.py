@@ -1,5 +1,4 @@
 ﻿from PySide6.QtCore import QObject
-
 from models.progress import ProgressModel
 
 

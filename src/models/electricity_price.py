@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import xlwings as xw
 from PySide6.QtCore import QObject, QDate
 
-from utils import DATE_FORMAT, get_resource_path
+from utils import get_resource_path
 
 
 async def wait_for_refresh_complete(wb, timeout_seconds=300):
@@ -54,7 +54,7 @@ class ElectricityPrice(QObject):
         self._already_updated = False
 
     async def get_prices(self, target_date: str) -> list[float]:
-        date: str = QDate.fromString(target_date, DATE_FORMAT).toString("dd.MM.yyyy")
+        date: str = QDate.fromString(target_date, "yyyy-MM-dd").toString("dd.MM.yyyy")
 
         if not self._already_updated:
             await wait_for_refresh_complete(self._workbook)

@@ -48,14 +48,19 @@ class YearlyDeviceTableModel(QAbstractTableModel):
             if device_index < len(self.__devices):
                 device = self.__devices[device_index]
 
-                if data_type == 0:
-                    return f"{device.generation[row]:.1f}" if device.generation[row] != 0 else "0"
-                elif data_type == 1:
-                    return f"{device.charge_energy[row]:.1f}" if device.charge_energy[row] != 0 else "0"
-                elif data_type == 2:
-                    return f"{device.discharge_energy[row]:.1f}" if device.discharge_energy[row] != 0 else "0"
-                elif data_type == 3:
-                    return f"{device.consumption[row]:.1f}" if device.consumption[row] != 0 else "0"
+                data_type_value = ""
+                
+                match data_type:
+                    case 0:
+                        data_type_value = f"{device.generation[row]:.1f}" if device.generation[row] != 0 else "0"
+                    case 1:
+                        data_type_value = f"{device.charge_energy[row]:.1f}" if device.charge_energy[row] != 0 else "0"
+                    case 2:
+                        data_type_value = f"{device.discharge_energy[row]:.1f}" if device.discharge_energy[row] != 0 else "0"
+                    case 3:
+                        data_type_value = f"{device.consumption[row]:.1f}" if device.consumption[row] != 0 else "0"
+
+                return data_type_value
 
             elif col == len(self.__headers) - 1:
                 return f"{self.__total_consumption[row]:.1f}" if self.__total_consumption[row] != 0 else "0"
@@ -68,7 +73,6 @@ class YearlyDeviceTableModel(QAbstractTableModel):
     def headerData(self, section, orientation, role=int(Qt.ItemDataRole.DisplayRole)):
         if orientation == Qt.Orientation.Horizontal and role == Qt.ItemDataRole.DisplayRole:
             return self.__headers[section]
-        elif orientation == Qt.Orientation.Vertical and role == Qt.ItemDataRole.DisplayRole:
+        if orientation == Qt.Orientation.Vertical and role == Qt.ItemDataRole.DisplayRole:
             return ""
-
         return None

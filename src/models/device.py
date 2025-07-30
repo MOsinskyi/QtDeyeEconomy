@@ -2,31 +2,31 @@
 
 
 class Device(QObject):
-    def __init__(self, sn: str, gen: list[float], consumption: list[float], charge: list[float], discharge: list[float]):
+    def __init__(self, sn: str, generation: list[float], consumption: list[float], charge: list[float], discharge: list[float]) -> None:
         super().__init__()
-        self._sn: str = sn
+        self.__sn = sn
 
-        self._generation: list[float] = gen
-        self._consumption: list[float] = consumption
-        self._charge_energy: list[float] = charge
-        self._discharge_energy: list[float] = discharge
+        self.__generation = generation
+        self.__consumption = consumption
+        self.__charge_energy = charge
+        self.__discharge_energy = discharge
 
     @property
     def sn(self) -> str:
-        return self._sn
+        return self.__sn
 
     @property
     def generation(self) -> list[float]:
-        return self._generation
+        return self.__generation
 
     @property
     def consumption(self) -> list[float]:
-        return self._consumption
+        return self.__consumption
 
     @property
     def charge_energy(self) -> list[float]:
-        return self._charge_energy
+        return self.__charge_energy
 
     @property
     def discharge_energy(self) -> list[float]:
-        return self._discharge_energy
+        return self.__discharge_energy
